@@ -1,0 +1,23 @@
+name: Daily Commit
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # каждый день в 6:00 утра UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Daily activity
+        run: |
+          echo "Daily activity on $(date)" >> activity.log
+          git config user.name "ТВОЙ_НИК"
+          git config user.email "почта к аккаунту на GitHub"
+          git add activity.log
+          git commit -m "🤖 Daily activity: $(date)"
+          git push
